@@ -8,3 +8,7 @@ The requirements for this project are:
     7. The application should communicate to DB via EF Core (Entity Framework Core)
 
 Ideas include something to track Bank info. Maybe a lemonade stand business thing, maybe the art spreadsheet I've been using, then I could implement times.
+Kung said we can make it as ridiculous as we want because the trainer's have seen a ton of banking apps.
+Basically we just want to be able to enable CRUD
+
+CRUD is Create, Read, Update, Delete. So for just about each entity we make, we need to be able to create, read, update, and delete those entities.
