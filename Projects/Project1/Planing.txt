@@ -1,0 +1,29 @@
+It will be a C# app, so #1 is easy.
+
+Ideally it will both build and run, so #2 also requires no extra planning
+
+Interact with user and have console UI. What I'm imagining has about 2 distinct options, so start with implementing just 1 in case it takes too long,
+    Having a console menu will set me up for being able to do any extra stuff, and it's a simple enough thing to fulfill #3.
+
+Input Validation will be handled by entity stuff, that's something that must be done when entites are created.
+
+Unit Testing is very much like Input Validation, I add it in.
+
+Needs to persist data to a SQL server and communicate via EF Core
+
+
+3-Tier Architechture. This shouldn't be too bad since I like MVC, so as long as I don't screw up the implementation it should be good.
+
+Dependency Injection. This requires some research to better understand in C#. I've read it before so it shouldn't be too bad to brush up on.
+
+TODO
+DETERMINE WHAT THE DATABASE IS GOING TO LOOK LIKE
+Console Menu 
+    This is the UI, I need to nail down what I need to have as options to sketch this out.
+Write out a template for the database
+    This one is going to be the best first step
+Input Validation
+    Requires knowing the number of entities, and thus the database part.
+Unit Tests
+Data Persistence and EF Core
+    The main objective of the project is to create a spreadsheet-esque object so the database and data persistence should come naturally while doing this.
