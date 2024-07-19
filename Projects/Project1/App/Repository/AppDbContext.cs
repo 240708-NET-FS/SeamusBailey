@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
         {
             IConfigurationRoot config = new ConfigurationBuilder()
                                             .SetBasePath(Directory.GetCurrentDirectory())
-                                            .AddJsonFile("appsettings.json")
+                                            .AddJsonFile("Service/appsettings.json")
                                             .Build();
             var connectionString = config.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
@@ -28,6 +28,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Workday>();
+        modelBuilder.Entity<Workday>()
+            .HasKey(w => w.Date);
     }
 }
