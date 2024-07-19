@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240719165617_InitialCreate")]
+    [Migration("20240719184133_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,26 +26,17 @@ namespace App.Migrations
 
             modelBuilder.Entity("App.Entities.Workday", b =>
                 {
+                    b.Property<int>("WorkdayID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkdayID"));
+
                     b.Property<string>("Date")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Banked")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CurrentWeekBanked")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EndOfWeekChange")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Interest")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Date");
+                    b.HasKey("WorkdayID");
 
                     b.ToTable("Workdays");
                 });

@@ -6,8 +6,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Enter a date please. ");
-        string date = Console.ReadLine();
+
+        Console.WriteLine("Hello, please enter a date. ");
+        var date = Console.ReadLine();
 
         using (var context = new AppDbContext())
         {
@@ -16,5 +17,6 @@ public class Program
             context.Workdays.Add(workday);
             context.SaveChanges();
         }
+        Console.WriteLine($"{date} has been created.");
     }
 }

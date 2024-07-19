@@ -14,16 +14,13 @@ namespace App.Migrations
                 name: "Workdays",
                 columns: table => new
                 {
-                    Date = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Banked = table.Column<int>(type: "int", nullable: false),
-                    CurrentWeekBanked = table.Column<int>(type: "int", nullable: false),
-                    EndOfWeekChange = table.Column<int>(type: "int", nullable: false),
-                    Interest = table.Column<int>(type: "int", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    WorkdayID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workdays", x => x.Date);
+                    table.PrimaryKey("PK_Workdays", x => x.WorkdayID);
                 });
         }
 

@@ -28,7 +28,6 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Workday>()
-            .HasKey(w => w.Date);
+        modelBuilder.Entity<Workday>();
     }
 }
