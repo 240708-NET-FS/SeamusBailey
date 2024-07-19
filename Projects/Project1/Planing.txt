@@ -16,10 +16,51 @@ Needs to persist data to a SQL server and communicate via EF Core
 
 Dependency Injection. This requires some research to better understand in C#. I've read it before so it shouldn't be too bad to brush up on.
 
+
+STARTING DATE IS 07/17/0082
+and every month has 30 days.
+100 per employee per day, which is "stored" until the end of the week.
+    3 employees
+        Jeremny
+        Kid McGee
+        Erika
+start with 152321 banked with 1500 to collect
+0.1% monthly interest
+
+End of the Week
+    randomly generate a number 1-20:
+        A 10 is no change, with a 10% change either up or down the further from 10. Flag a min or max.
+        A flag needs to be obvious
+        For instance, generating a 15 increases the income by 50%, getting a 5 reduces that weeks income by 50%
+
+The Database has the columns:
+Date, which can be a primary key
+Current banked
+Current Current week Earning
+End Of Week Random change
+    End of Week
+Interest change
+    Once a month
+Notes
+    Picking up a new employee
+    Withdrawal
+    Deposit
+    A day is skipped (idk holidays?) WEEKENDS
+
+
 TODO
 DETERMINE WHAT THE DATABASE IS GOING TO LOOK LIKE
 Console Menu 
     This is the UI, I need to nail down what I need to have as options to sketch this out.
+        Advance date
+        Reset date
+        Edit any current value
+            banked
+            weekly
+        Deposit
+        Withdraw
+        Able to Skip dates
+
 Write out a template for the database
     This one is going to be the best first step
 Input Validation
@@ -27,3 +68,6 @@ Input Validation
 Unit Tests
 Data Persistence and EF Core
     The main objective of the project is to create a spreadsheet-esque object so the database and data persistence should come naturally while doing this.
+
+Date should be a simple enough key since I advance and add entries per day.
+    Production can't use date since multiple things can advance per day, but I'll implement production after income.
