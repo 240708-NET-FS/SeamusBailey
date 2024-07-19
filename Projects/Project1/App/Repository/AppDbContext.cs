@@ -26,8 +26,9 @@ public class AppDbContext : DbContext
         }
     }
 
+    //I don't believe I need an OnModelCreating, but this is where it would go.
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Workday>();
+        modelBuilder.Entity<Workday>().HasKey(w => w.Date);
     }
 }

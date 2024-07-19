@@ -1,4 +1,6 @@
-﻿using App.Entities;
+﻿using App.DAO;
+using App.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace App;
 
@@ -6,17 +8,11 @@ public class Program
 {
     public static void Main(string[] args)
     {
-
-        Console.WriteLine("Hello, please enter a date. ");
-        var date = Console.ReadLine();
-
         using (var context = new AppDbContext())
         {
-            var workday = new Workday {Date = date};
+            WorkdayDAO workdayDao = new WorkdayDAO(context);
 
-            context.Workdays.Add(workday);
-            context.SaveChanges();
+            workdayDao.Create(new Workday{Date="07/17/0082", DayOfWeek=4, Banked=152321, CurrentWeekBanked=1500, EndOfWeekChange=0, Interest=0, Notes=""});
         }
-        Console.WriteLine($"{date} has been created.");
     }
 }

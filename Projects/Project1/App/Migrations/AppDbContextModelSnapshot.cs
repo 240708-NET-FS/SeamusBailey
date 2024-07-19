@@ -23,17 +23,29 @@ namespace App.Migrations
 
             modelBuilder.Entity("App.Entities.Workday", b =>
                 {
-                    b.Property<int>("WorkdayID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Banked")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkdayID"));
+                    b.Property<int>("CurrentWeekBanked")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Date")
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EndOfWeekChange")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Interest")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("WorkdayID");
+                    b.HasKey("Date");
 
                     b.ToTable("Workdays");
                 });

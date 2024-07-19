@@ -1,0 +1,7 @@
+CRUD
+    Implement DAO in repository
+    This belongs in the repository
+Console UI 
+    This will be in the Controller
+Input Validation
+    This will be in the Service
