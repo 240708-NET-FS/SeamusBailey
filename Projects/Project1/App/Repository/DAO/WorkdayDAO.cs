@@ -2,7 +2,7 @@ using App.Entities;
 
 namespace App.DAO;
 
-public class WorkdayDAO
+public class WorkdayDAO : IDAO<Workday>
 {
     private readonly AppDbContext _context;
 
@@ -30,7 +30,7 @@ public class WorkdayDAO
         return workdays;
     }
 
-    public Workday GetByDate(string ID)
+    public Workday GetById(string ID)
     {
         Workday workday = _context.Workdays.FirstOrDefault(w => w.Date == ID);
 
