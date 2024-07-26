@@ -12,3 +12,14 @@ Kung said we can make it as ridiculous as we want because the trainer's have see
 Basically we just want to be able to enable CRUD
 
 CRUD is Create, Read, Update, Delete. So for just about each entity we make, we need to be able to create, read, update, and delete those entities.
+
+If I have time, I should add something that is basically settings. So I don't have that I make 300 a week hardcoded, so it can track how many employees and the money each employee makes.
+
+Requirements Checklist:
+    1. Done
+    2. Done, but may stop running
+    3. 
+    4. 
+    5. 
+    6. Done, I need to actually let the user send stuff
+    7. This and 6 are effectively the same

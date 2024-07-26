@@ -17,7 +17,7 @@ Needs to persist data to a SQL server and communicate via EF Core
 Dependency Injection. This requires some research to better understand in C#. I've read it before so it shouldn't be too bad to brush up on.
 
 
-STARTING DATE IS 07/17/0082
+STARTING DATE IS 07/17/0082 <-- this may not be the case anymore, it's on the spreadsheet
 and every month has 30 days.
 100 per employee per day, which is "stored" until the end of the week.
     3 employees
