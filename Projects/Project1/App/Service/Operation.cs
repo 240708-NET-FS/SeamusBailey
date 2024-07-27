@@ -1,7 +1,8 @@
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 using App.DAO;
 using App.Entities;
-using App.Migrations;
+// using App.Migrations;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace App.Service;
@@ -20,13 +21,13 @@ public class Operation
         string[] start = startingDate.Split("/");
         string[] later = laterDate.Split("/");
 
-        int startMonth = Int32.Parse(start[0]);
-        int startDay = Int32.Parse(start[1]);
-        int startYear = Int32.Parse(start[2]);
+        int startMonth = Int32.Parse(start[1]);
+        int startDay = Int32.Parse(start[2]);
+        int startYear = Int32.Parse(start[0]);
 
-        int endMonth = Int32.Parse(later[0]);
-        int endDay = Int32.Parse(later[1]);
-        int endYear = Int32.Parse(later[2]);
+        int endMonth = Int32.Parse(later[1]);
+        int endDay = Int32.Parse(later[2]);
+        int endYear = Int32.Parse(later[0]);
 
         int startSumOfDays = (startYear*360) + (startMonth*30) + startDay;
         int endSumOfDays = (endYear*360) + (endMonth*30) + endDay;
@@ -96,23 +97,23 @@ public class Operation
         string[] split =  day.Date.Split("/");
         string newDate = "";
 
-        int dayOfMonth = Int32.Parse(split[1]);
-        int month = Int32.Parse(split[0]);
-        int year = Int32.Parse(split[2]);
+        int dayOfMonth = Int32.Parse(split[2]);
+        int month = Int32.Parse(split[1]);
+        int year = Int32.Parse(split[0]);
 
         if (dayOfMonth  == 30 && month == 12){
             year += 1;
             month = 1;
             dayOfMonth = 1;
             // The following string constructions would need a function to force the year to be 4 digits, but I already wrote it in this format and don't want to change it.
-            newDate += (month.ToString() + "/" + dayOfMonth.ToString() + "/00" + year.ToString());
+            newDate += ("00" + year.ToString() + "/" + month.ToString() + "/" + dayOfMonth.ToString());
         } else if (dayOfMonth == 30) {
             month += 1;
             dayOfMonth = 1;
-            newDate += (month.ToString() + "/" + dayOfMonth.ToString() + "/00" + year.ToString());
+            newDate += ("00" + year.ToString() + "/" + month.ToString() + "/" + dayOfMonth.ToString());
         } else {
             dayOfMonth += 1;
-            newDate += (month.ToString() + "/" + dayOfMonth.ToString() + "/00" + year.ToString());
+            newDate += ("00" +year.ToString() + "/" + month.ToString() + "/" + dayOfMonth.ToString());
         }
 
         if (dayOfMonth > 30){
@@ -134,7 +135,7 @@ public class Operation
         int dOW = day.DayOfWeek;
 
         if (dOW == 1){
-            if (Int32.Parse(day.Date.Split("/")[1]) == 30){
+            if (Int32.Parse(day.Date.Split("/")[2]) == 30){
                 day = AdvanceInterest(day);
             } 
             day = AdvanceDate(day);
@@ -142,7 +143,7 @@ public class Operation
             return day;
         } 
         else if (dOW == 7){
-            if (Int32.Parse(day.Date.Split("/")[1]) == 30){
+            if (Int32.Parse(day.Date.Split("/")[2]) == 30){
                 day = AdvanceInterest(day);
             } 
             day = AdvanceDate(day);
@@ -150,7 +151,7 @@ public class Operation
             return day;
         }
         else if (dOW == 6){
-            if (Int32.Parse(day.Date.Split("/")[1]) == 30){
+            if (Int32.Parse(day.Date.Split("/")[2]) == 30){
                 day = AdvanceInterest(day);
             } 
             day = AdvanceDate(day);
@@ -161,7 +162,7 @@ public class Operation
             return day;
         }
         else  if (dOW > 1 && dOW < 6){
-            if (Int32.Parse(day.Date.Split("/")[1]) == 30){
+            if (Int32.Parse(day.Date.Split("/")[2]) == 30){
                 day = AdvanceInterest(day);
             }
             day = AdvanceDate(day);
@@ -177,4 +178,60 @@ public class Operation
             return day;
         }
     }
+
+    public static Workday CleanDay(Workday day){
+        day.EndOfWeekChange = 0;
+        day.Interest = 0;
+        day.Notes = "";
+        return day;
+    }
+
+    public static void AdvanceDays(Workday day, int numberOfDays, WorkdayDAO dao){
+        for(int i=0; i < numberOfDays; i++){
+            day = AdvanceDay(day);
+            // I need to save changes here, but then it needs a DAO
+            dao.Create(day);
+            Console.WriteLine($"Created listing for {day.Date}");
+            day = CleanDay(day);
+        }
+    }
+
+    public static void UpdateManually(string[] day, WorkdayDAO dao){
+        string date = day[0];
+        int dayOfWeek = Int32.Parse(day[1]);
+        int banked = Int32.Parse(day[2]);
+        int currentWeekBanked = Int32.Parse(day[3]);
+        int endOfWeekChange = Int32.Parse(day[4]);
+        int interest = Int32.Parse(day[5]);
+        string notes = day[6];
+        Workday newDay = new Workday(date, dayOfWeek, banked, currentWeekBanked, endOfWeekChange, interest, notes);
+        dao.Update(newDay);
+    }
+
+    public static Workday ReadFromDate(string date, WorkdayDAO dao){
+        return dao.GetById(date);
+    }
+
+    public static void CreateManually(string[] day, WorkdayDAO dao){
+        string date = day[0];
+        int dayOfWeek = Int32.Parse(day[1]);
+        int banked = Int32.Parse(day[2]);
+        int currentWeekBanked = Int32.Parse(day[3]);
+        int endOfWeekChange = Int32.Parse(day[4]);
+        int interest = Int32.Parse(day[5]);
+        string notes = day[6];
+        Workday newDay = new Workday(date, dayOfWeek, banked, currentWeekBanked, endOfWeekChange, interest, notes);
+        dao.Create(newDay);
+    }
+
+    public static void DeleteManually(string day, WorkdayDAO dao){
+        Workday dayToDelete = ReadFromDate(day, dao);
+        bool validation = InputValidation.ValidateDayNotNull(dayToDelete);
+        if (validation){
+            dao.Delete(dayToDelete);
+        } else {
+            Console.WriteLine("No such date exists.");
+        }
+    }
+
 }

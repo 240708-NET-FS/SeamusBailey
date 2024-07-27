@@ -31,4 +31,8 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Workday>().HasKey(w => w.Date);
     }
+
+    public static Workday GetLastWorkday(DbSet<Workday> day){
+        return day.LastOrDefault();
+    }
 }

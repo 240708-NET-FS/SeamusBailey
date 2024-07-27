@@ -18,8 +18,8 @@ If I have time, I should add something that is basically settings. So I don't ha
 Requirements Checklist:
     1. Done
     2. Done, but may stop running
-    3. 
-    4. 
-    5. 
+    3. Done
+    4. Done
+    5. Done
     6. Done, I need to actually let the user send stuff
-    7. This and 6 are effectively the same
+    7. This and 6 are effectively the same. These two are where my delete issue lies.
