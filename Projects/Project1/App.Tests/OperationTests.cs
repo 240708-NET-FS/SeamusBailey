@@ -13,8 +13,8 @@ public class OperationTests
     {
         //Operation ops = new Operation(); Haha, it's a static function
 
-        string a = "07/22/0082";
-        string b = "07/22/0082";
+        string a = "0082/07/22";
+        string b = "0082/07/22";
 
         int result = Operation.GetNumOfDays(a, b);
 
@@ -24,8 +24,8 @@ public class OperationTests
     [Fact]
     public void GetNumOfDaysDoesntCareAboutOrder()
     {
-        string a = "07/23/0082";
-        string b = "07/30/0082";
+        string a = "0082/07/23";
+        string b = "0082/07/30";
 
         int T1 = Operation.GetNumOfDays(a, b);
         int T2 = Operation.GetNumOfDays(b, a);
@@ -36,13 +36,13 @@ public class OperationTests
     }
 
     [Theory]
-    [InlineData("07/30/0082", "07/23/0082", 7)]
-    [InlineData("07/23/0082", "07/30/0082", 7)]
-    [InlineData("07/23/0083", "07/23/0082", 360)]
-    [InlineData("08/23/0082", "07/23/0082", 30)]
-    [InlineData("08/23/0083", "07/23/0082", 390)]
-    [InlineData("08/30/0083", "07/23/0082", 397)]
-    [InlineData("08/14/0082", "07/22/0082", 22)]
+    [InlineData("0082/07/30", "0082/07/23", 7)]
+    [InlineData("0082/07/23", "0082/07/30", 7)]
+    [InlineData("0083/07/23", "0082/07/23", 360)]
+    [InlineData("0082/08/23", "0082/07/23", 30)]
+    [InlineData("0083/08/23", "0082/07/23", 390)]
+    [InlineData("0083/08/30", "0082/07/23", 397)]
+    [InlineData("0082/08/14", "0082/07/22", 22)]
     public void GetNumOfDaysReturnsCorrectNumber(string a, string b, int expected){
         int result = Operation.GetNumOfDays(a,b);
         Assert.Equal(expected, result);
@@ -50,14 +50,14 @@ public class OperationTests
 
     [Fact]
     public void GenerateRandomEndOfWeekChangeReturnsZeroOnTen(){
-        Workday wd = new Workday("07/22/0082", 0, 0, 300, 0, 0, "");
+        Workday wd = new Workday("0082/07/22", 0, 0, 300, 0, 0, "");
         Workday result = Operation.GenerateRandomEndOfWeekChange(wd, 10);
         Assert.Equal(wd, result);
     }
 
     [Fact]
     public void GenerateRandomEndOfWeekChangeReturnsCorrectValue1(){
-        Workday wd = new Workday("07/22/0082", 0, 0, 100, 0, 0, "");
+        Workday wd = new Workday("0082/07/22", 0, 0, 100, 0, 0, "");
         int roll = 12;
         Workday result = Operation.GenerateRandomEndOfWeekChange(wd, roll);
 
@@ -66,7 +66,7 @@ public class OperationTests
 
     [Fact]
     public void GenerateRandomEndOfWeekChangeReturnsCorrectValue2(){
-        Workday wd = new Workday("07/22/0082", 0, 0, 100, 0, 0, "");
+        Workday wd = new Workday("0082/07/22", 0, 0, 100, 0, 0, "");
         int roll = 8;
         Workday result = Operation.GenerateRandomEndOfWeekChange(wd, roll);
 
@@ -75,7 +75,7 @@ public class OperationTests
 
     [Fact]
     public void GenerateRandomEndOfWeekChangeReturnsCorrectValue3(){
-        Workday wd = new Workday("07/22/0082", 0, 0, 100, 0, 0, "");
+        Workday wd = new Workday("0082/07/22", 0, 0, 100, 0, 0, "");
         int roll = 19;
         Workday result = Operation.GenerateRandomEndOfWeekChange(wd, roll);
 
@@ -84,7 +84,7 @@ public class OperationTests
 
     [Fact]
     public void GenerateRandomEndOfWeekChangeNotesCorrectly(){
-        Workday wd = new Workday("07/22/0082", 0, 0, 100, 0, 0, "");
+        Workday wd = new Workday("0082/07/22", 0, 0, 100, 0, 0, "");
         int roll = 20;
         Workday result = Operation.GenerateRandomEndOfWeekChange(wd, roll);
 
@@ -96,10 +96,10 @@ public class OperationTests
     [Fact]
     public void AdvanceDayReturnsCorrectOnWeekRollover()
     {
-        Workday wd = new Workday("7/27/0082", 7, 0, 0, 0, 0, "");
+        Workday wd = new Workday("0082/7/27", 7, 0, 0, 0, 0, "");
         Workday resultWD = Operation.AdvanceDay(wd);
 
-        Workday expectedWD = new Workday("7/28/0082", 1, 0, 0, 0, 0, "");
+        Workday expectedWD = new Workday("0082/7/28", 1, 0, 0, 0, 0, "");
 
         (string, int) result = (resultWD.Date, resultWD.DayOfWeek);
         (string, int) expected = (resultWD.Date, resultWD.DayOfWeek);
@@ -110,10 +110,10 @@ public class OperationTests
     [Fact]
     public void AdvanceDateReturnsCorrectOnMonthRollover()
     {
-        Workday wd = new Workday("7/30/0082", 0, 0, 0, 0, 0, "");
+        Workday wd = new Workday("0082/7/30", 0, 0, 0, 0, 0, "");
         Workday resultWD = Operation.AdvanceDate(wd);
 
-        Workday expectedWD = new("8/1/0082", 0, 0, 0, 0, 0, "");
+        Workday expectedWD = new("0082/8/1", 0, 0, 0, 0, 0, "");
 
         string result = resultWD.Date;
         string expected = expectedWD.Date;
@@ -124,10 +124,10 @@ public class OperationTests
     [Fact]
     public void AdvanceDateReturnsCorrectOnYearRollover()
     {
-        Workday wd = new Workday("12/30/0082", 7, 0, 0, 0, 0, "");
+        Workday wd = new Workday("0082/12/30", 7, 0, 0, 0, 0, "");
         Workday resultWD = Operation.AdvanceDate(wd);
 
-        Workday expectedWD = new("1/1/0083", 1, 0, 0, 0, 0, "");
+        Workday expectedWD = new("0083/1/1", 1, 0, 0, 0, 0, "");
 
         string result = resultWD.Date;
         string expected = expectedWD.Date;
@@ -138,10 +138,10 @@ public class OperationTests
     [Fact]
     public void AdvanceDayActuallyAdvancesDay()
     {
-        Workday wd = new Workday("7/22/0082", 2, 154421, 300, 0, 0, "");
+        Workday wd = new Workday("0082/7/22", 2, 154421, 300, 0, 0, "");
         Workday resultWD = Operation.AdvanceDay(wd);
 
-        Workday expectedWD = new("7/23/0082", 3, 154421, 600, 0, 0, "");
+        Workday expectedWD = new("0082/7/23", 3, 154421, 600, 0, 0, "");
 
         (string, int, int, int, int) result = (resultWD.Date, resultWD.DayOfWeek, resultWD.CurrentWeekBanked, resultWD.EndOfWeekChange, resultWD.Interest);
         (string, int, int, int, int) expected = (expectedWD.Date, expectedWD.DayOfWeek, expectedWD.CurrentWeekBanked, expectedWD.EndOfWeekChange, expectedWD.Interest);

@@ -5,7 +5,7 @@
 namespace App.Migrations
 {
     /// <inheritdoc />
-    public partial class SecondTest : Migration
+    public partial class BeforePresent : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
